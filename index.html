@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plug:ON 아티팩트</title>
+    <style>
+      :root { color-scheme: light; font-family: "Paperlogy", "Pretendard", "Noto Sans KR", sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f7f8f6; color: #17212b; }
+      main { width: min(720px, calc(100% - 40px)); padding: 56px 0; }
+      h1 { margin: 0 0 12px; font-size: clamp(28px, 5vw, 44px); letter-spacing: -0.04em; }
+      p { margin: 0 0 32px; color: #56616d; font-size: 17px; line-height: 1.65; }
+      nav { display: grid; gap: 12px; }
+      a { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; border: 1px solid #dde2e5; border-radius: 14px; background: #fff; color: inherit; font-size: 18px; font-weight: 700; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+      a::after { content: "→"; color: #1f9d67; font-size: 24px; }
+      a:hover, a:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(23, 33, 43, .12); outline: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Plug:ON 아티팩트</h1>
+      <p>배포된 가이드를 선택해 열어보세요.</p>
+      <nav aria-label="아티팩트 목록">
+        <a href="아티팩트_활용_가이드.html">아티팩트 활용 가이드</a>
+        <a href="바이브코딩_업무유스케이스_갤러리.html">바이브코딩 업무 유스케이스 갤러리</a>
+        <a href="LLM_활용전략_가이드.html">LLM 활용전략 가이드</a>
+      </nav>
+    </main>
+  </body>
+</html>
