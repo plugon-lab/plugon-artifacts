@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 핵심 개념</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #faf7f2;
+    font-family: 'Geist', sans-serif;
+    color: #1c1917;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #78716c;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #1c1917;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #57534e;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .section-label {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1917;
+    margin-bottom: 12px;
+  }
+
+  .diagram-wrap {
+    background: #efeee5;
+    border: 1px solid rgba(28,25,23,0.12);
+    border-radius: 8px;
+    padding: 28px 20px 20px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.95fr;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid rgba(28,25,23,0.12);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .card-eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #78716c;
+    margin-bottom: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .card-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .card-dot.accent { background: #b5523a; }
+  .card-dot.ink    { background: #1c1917; }
+  .card-dot.teal   { background: #0d7377; }
+
+  .card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c1917;
+    line-height: 1.3;
+  }
+
+  .card ul { list-style: none; padding: 0; }
+  .card ul li {
+    font-size: 12px;
+    color: #57534e;
+    padding: 3px 0 3px 13px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .card ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: #a8a29e;
+  }
+
+  .card .tip {
+    margin-top: 12px;
+    background: rgba(181,82,58,0.06);
+    border-left: 2px solid #b5523a;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: #57534e;
+    border-radius: 0 4px 4px 0;
+    line-height: 1.5;
+  }
+
+  code {
+    font-size: 11px;
+    background: #f2ede4;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: 'Geist Mono', monospace;
+  }
+
+  footer {
+    border-top: 1px solid rgba(28,25,23,0.10);
+    padding-top: 16px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 9px;
+    color: #a8a29e;
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">CLAUDE CODE · 초보자 핵심 개념</p>
+  <h1>Claude Code, 이것만 알면 시작할 수 있다</h1>
+  <p class="subtitle">
+    Claude Code는 폴더 단위로 작업 범위가 정해집니다.<br>
+    세 가지 개념만 이해하면, 헷갈리지 않고 바로 쓸 수 있어요.
+  </p>
+
+  <!-- ══════════════════════════════════
+       DIAGRAM 1 — 폴더 = 작업 범위
+  ══════════════════════════════════════ -->
+  <p class="section-label">개념 01 · 폴더가 곧 Claude의 작업 범위입니다</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 820 204" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+      <defs>
+        <pattern id="d1" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(28,25,23,0.10)"/>
+        </pattern>
+        <marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <polygon points="0 0,7 3.5,0 7" fill="#57534e"/>
+        </marker>
+      </defs>
+      <rect width="820" height="204" fill="#efeee5"/>
+      <rect width="820" height="204" fill="url(#d1)" opacity="0.5"/>
+
+      <!-- VS Code 창 -->
+      <rect x="24" y="24" width="296" height="148" rx="6"
+            fill="rgba(28,25,23,0.04)" stroke="rgba(28,25,23,0.28)" stroke-width="1"/>
+      <rect x="24" y="24" width="296" height="28" rx="6" fill="rgba(28,25,23,0.10)"/>
+      <rect x="24" y="38" width="296" height="14" fill="rgba(28,25,23,0.10)"/>
+      <circle cx="40" cy="38" r="5" fill="#e05252" opacity="0.7"/>
+      <circle cx="56" cy="38" r="5" fill="#e0a052" opacity="0.7"/>
+      <circle cx="72" cy="38" r="5" fill="#52c152" opacity="0.7"/>
+      <text x="100" y="42" fill="#57534e" font-size="8" font-family="'Geist Mono',monospace" text-anchor="middle" letter-spacing="0.06em">VS CODE</text>
+      <text x="40" y="64" fill="#78716c" font-size="9" font-family="'Geist Mono',monospace">File →</text>
+      <text x="80" y="64" fill="#57534e" font-size="9" font-family="'Geist Mono',monospace">Open Folder...</text>
+      <text x="40" y="84" fill="#78716c" font-size="9" font-family="'Geist',sans-serif">📂</text>
+      <text x="58" y="84" fill="#b5523a" font-size="9" font-family="'Geist Mono',monospace" font-weight="600">weather-app</text>
+      <text x="40" y="108" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace">✓  Claude Code 확장 시작됨</text>
+      <text x="40" y="124" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace">✓  weather-app 폴더 인식</text>
+      <text x="40" y="140" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace">✓  3개 파일 로드 완료</text>
+
+      <!-- Arrow -->
+      <defs>
+        <marker id="a1r" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <polygon points="0 0,7 3.5,0 7" fill="#57534e"/>
+        </marker>
+      </defs>
+      <line x1="336" y1="100" x2="380" y2="100"
+            stroke="#57534e" stroke-width="1" marker-end="url(#a1r)"/>
+      <rect x="330" y="90" width="56" height="14" rx="2" fill="#efeee5"/>
+      <text x="358" y="101" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.06em">열기</text>
+
+      <!-- Folder: weather-app (highlighted) -->
+      <rect x="392" y="24" width="404" height="148" rx="6"
+            fill="rgba(181,82,58,0.06)" stroke="#b5523a" stroke-width="1"/>
+      <rect x="404" y="16" width="112" height="16" rx="2" fill="#efeee5"/>
+      <text x="460" y="27" fill="#b5523a" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.12em" font-weight="600">WEATHER-APP 폴더</text>
+
+      <!-- File icons — visible -->
+      <rect x="412" y="44" width="36" height="44" rx="3"
+            fill="white" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <polygon points="434,48 448,48 448,62 434,62" fill="#efeee5" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <text x="430" y="80" fill="#57534e" font-size="8" font-family="'Geist Mono',monospace" text-anchor="middle">app.py</text>
+
+      <rect x="460" y="44" width="36" height="44" rx="3"
+            fill="white" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <polygon points="482,48 496,48 496,62 482,62" fill="#efeee5" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <text x="478" y="80" fill="#57534e" font-size="8" font-family="'Geist Mono',monospace" text-anchor="middle">utils.py</text>
+
+      <rect x="508" y="44" width="36" height="44" rx="3"
+            fill="white" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <polygon points="530,48 544,48 544,62 530,62" fill="#efeee5" stroke="rgba(28,25,23,0.18)" stroke-width="0.8"/>
+      <text x="526" y="80" fill="#57534e" font-size="8" font-family="'Geist Mono',monospace" text-anchor="middle">.env</text>
+
+      <!-- Eyes emoji -->
+      <text x="564" y="68" fill="#b5523a" font-size="22" font-family="'Geist',sans-serif">👀</text>
+      <text x="596" y="60" fill="#b5523a" font-size="9" font-family="'Geist',sans-serif" font-weight="600">Claude가</text>
+      <text x="596" y="73" fill="#b5523a" font-size="9" font-family="'Geist',sans-serif" font-weight="600">읽는 파일</text>
+
+      <!-- Dashed wall -->
+      <line x1="648" y1="36" x2="648" y2="160"
+            stroke="rgba(28,25,23,0.20)" stroke-width="1.2" stroke-dasharray="5,3"/>
+
+      <!-- Invisible folders -->
+      <rect x="660" y="44" width="56" height="44" rx="3"
+            fill="rgba(28,25,23,0.03)" stroke="rgba(28,25,23,0.08)" stroke-width="0.8"/>
+      <text x="688" y="68" fill="#c4bfbb" font-size="9" font-family="'Geist Mono',monospace" text-anchor="middle">todo/</text>
+
+      <rect x="726" y="44" width="56" height="44" rx="3"
+            fill="rgba(28,25,23,0.03)" stroke="rgba(28,25,23,0.08)" stroke-width="0.8"/>
+      <text x="754" y="68" fill="#c4bfbb" font-size="9" font-family="'Geist Mono',monospace" text-anchor="middle">blog/</text>
+
+      <text x="706" y="112" fill="#c4bfbb" font-size="9" font-family="'Instrument Serif',serif"
+            font-style="italic" text-anchor="middle">보이지 않음</text>
+
+      <!-- Legend -->
+      <line x1="392" y1="182" x2="792" y2="182" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <rect x="404" y="188" width="8" height="10" rx="1" fill="white" stroke="rgba(28,25,23,0.25)" stroke-width="0.8"/>
+      <text x="418" y="197" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace">Claude가 인식하는 파일</text>
+      <rect x="560" y="188" width="8" height="10" rx="1" fill="rgba(28,25,23,0.04)" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="574" y="197" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace">인식 불가 (다른 폴더)</text>
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════
+       DIAGRAM 2 — 세션 독립성
+  ══════════════════════════════════════ -->
+  <p class="section-label" style="margin-top:32px;">개념 02 · 프로젝트마다 Claude는 완전히 독립적입니다</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 820 180" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+      <defs>
+        <pattern id="d2" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(28,25,23,0.10)"/>
+        </pattern>
+      </defs>
+      <rect width="820" height="180" fill="#efeee5"/>
+      <rect width="820" height="180" fill="url(#d2)" opacity="0.5"/>
+
+      <!-- Session A -->
+      <rect x="24" y="20" width="344" height="120" rx="6"
+            fill="rgba(181,82,58,0.06)" stroke="#b5523a" stroke-width="1"/>
+      <rect x="36" y="12" width="120" height="16" rx="2" fill="#efeee5"/>
+      <text x="96" y="23" fill="#b5523a" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.10em" font-weight="600">세션 A · weather-app</text>
+
+      <rect x="44" y="36" width="304" height="28" rx="4"
+            fill="white" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="54" y="54" fill="#57534e" font-size="10" font-family="'Geist',sans-serif">👤  "기온 API 연동 코드 짜줘"</text>
+
+      <rect x="44" y="72" width="304" height="28" rx="4"
+            fill="rgba(181,82,58,0.08)" stroke="#b5523a" stroke-width="0.8"/>
+      <text x="54" y="90" fill="#1c1917" font-size="10" font-family="'Geist',sans-serif">🤖  "app.py 기준으로 작성할게요"</text>
+
+      <text x="196" y="132" fill="#b5523a" font-size="9" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.08em">weather-app 전용 대화</text>
+
+      <!-- Center wall -->
+      <rect x="384" y="20" width="52" height="120" rx="4"
+            fill="rgba(28,25,23,0.04)" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="410" y="82" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" transform="rotate(-90,410,82)" letter-spacing="0.14em">완전 분리</text>
+      <text x="410" y="50" fill="#c4bfbb" font-size="16" text-anchor="middle">✕</text>
+      <text x="410" y="112" fill="#c4bfbb" font-size="16" text-anchor="middle">✕</text>
+
+      <!-- Session B -->
+      <rect x="452" y="20" width="344" height="120" rx="6"
+            fill="rgba(28,25,23,0.04)" stroke="rgba(28,25,23,0.28)" stroke-width="1"/>
+      <rect x="464" y="12" width="112" height="16" rx="2" fill="#efeee5"/>
+      <text x="520" y="23" fill="#57534e" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.10em" font-weight="500">세션 B · todo-app</text>
+
+      <rect x="472" y="36" width="304" height="28" rx="4"
+            fill="white" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="482" y="54" fill="#57534e" font-size="10" font-family="'Geist',sans-serif">👤  "할 일 목록 정렬 기능 추가해줘"</text>
+
+      <rect x="472" y="72" width="304" height="28" rx="4"
+            fill="rgba(28,25,23,0.06)" stroke="rgba(28,25,23,0.22)" stroke-width="0.8"/>
+      <text x="482" y="90" fill="#1c1917" font-size="10" font-family="'Geist',sans-serif">🤖  "index.ts 기준으로 작성할게요"</text>
+
+      <text x="622" y="132" fill="#78716c" font-size="9" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.08em">todo-app 전용 대화</text>
+
+      <!-- Legend -->
+      <line x1="24" y1="156" x2="796" y2="156" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="36" y="170" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace">
+        두 세션의 대화는 절대 섞이지 않습니다 — 각자 자기 프로젝트 파일만 봅니다
+      </text>
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════
+       DIAGRAM 3 — CLAUDE.md
+  ══════════════════════════════════════ -->
+  <p class="section-label" style="margin-top:32px;">개념 03 · 세션이 끝나면 Claude는 모든 것을 잊습니다 — CLAUDE.md가 해결책입니다</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 820 236" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+      <defs>
+        <pattern id="d3" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(28,25,23,0.10)"/>
+        </pattern>
+        <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <polygon points="0 0,7 3.5,0 7" fill="#0d7377"/>
+        </marker>
+      </defs>
+      <rect width="820" height="236" fill="#efeee5"/>
+      <rect width="820" height="236" fill="url(#d3)" opacity="0.5"/>
+
+      <!-- LEFT: Without CLAUDE.md -->
+      <rect x="24" y="20" width="368" height="180" rx="6"
+            fill="rgba(28,25,23,0.03)" stroke="rgba(28,25,23,0.20)" stroke-width="1"/>
+      <rect x="36" y="12" width="128" height="16" rx="2" fill="#efeee5"/>
+      <text x="100" y="23" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.12em">CLAUDE.md 없을 때</text>
+
+      <!-- Day 1 -->
+      <text x="44" y="48" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace" letter-spacing="0.1em">1일차 세션</text>
+      <rect x="44" y="56" width="332" height="28" rx="3"
+            fill="white" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="54" y="73" fill="#57534e" font-size="9" font-family="'Geist',sans-serif">"Python 3.11 써줘, pytest로 테스트해줘"  →  ✓ 이해</text>
+
+      <!-- Session ends -->
+      <line x1="44" y1="96" x2="376" y2="96" stroke="rgba(28,25,23,0.12)" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <rect x="148" y="88" width="96" height="16" rx="2" fill="#efeee5"/>
+      <text x="196" y="99" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.08em">세션 종료 · 기억 소멸</text>
+
+      <!-- Day 2 -->
+      <text x="44" y="120" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace" letter-spacing="0.1em">2일차 세션 (새로 시작)</text>
+      <rect x="44" y="128" width="332" height="28" rx="3"
+            fill="rgba(200,60,60,0.06)" stroke="rgba(200,60,60,0.22)" stroke-width="0.8"/>
+      <text x="54" y="145" fill="#57534e" font-size="9" font-family="'Geist',sans-serif">"테스트 짜줘"  →  ❌ 뭘로 짜야 하죠?</text>
+
+      <text x="54" y="172" fill="#a8a29e" font-size="9" font-family="'Instrument Serif',serif" font-style="italic">세션이 끊기면 대화 내용을 기억 못 함</text>
+      <text x="54" y="188" fill="#a8a29e" font-size="9" font-family="'Instrument Serif',serif" font-style="italic">매번 같은 설명을 반복해야 함</text>
+
+      <!-- Divider -->
+      <line x1="408" y1="20" x2="408" y2="200" stroke="rgba(28,25,23,0.12)" stroke-width="0.8" stroke-dasharray="4,4"/>
+      <rect x="394" y="100" width="28" height="16" rx="2" fill="#efeee5"/>
+      <text x="408" y="111" fill="#a8a29e" font-size="8" font-family="'Geist Mono',monospace" text-anchor="middle">VS</text>
+
+      <!-- RIGHT: With CLAUDE.md -->
+      <rect x="428" y="20" width="368" height="180" rx="6"
+            fill="rgba(13,115,119,0.05)" stroke="#0d7377" stroke-width="1"/>
+      <rect x="440" y="12" width="128" height="16" rx="2" fill="#efeee5"/>
+      <text x="504" y="23" fill="#0d7377" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.12em" font-weight="600">CLAUDE.md 있을 때</text>
+
+      <!-- CLAUDE.md file -->
+      <rect x="448" y="36" width="52" height="64" rx="4"
+            fill="white" stroke="#0d7377" stroke-width="1"/>
+      <polygon points="484,40 500,40 500,56 484,56"
+               fill="rgba(13,115,119,0.10)" stroke="#0d7377" stroke-width="0.8"/>
+      <text x="474" y="74" fill="#0d7377" font-size="7" font-family="'Geist Mono',monospace" text-anchor="middle" font-weight="600">CLAUDE</text>
+      <text x="474" y="85" fill="#0d7377" font-size="7" font-family="'Geist Mono',monospace" text-anchor="middle" font-weight="600">.md</text>
+      <line x1="456" y1="92" x2="492" y2="92" stroke="rgba(13,115,119,0.22)" stroke-width="0.8"/>
+      <line x1="456" y1="97" x2="486" y2="97" stroke="rgba(13,115,119,0.14)" stroke-width="0.8"/>
+
+      <!-- Content box -->
+      <rect x="512" y="36" width="268" height="64" rx="4"
+            fill="rgba(13,115,119,0.06)" stroke="rgba(13,115,119,0.18)" stroke-width="0.8"/>
+      <text x="524" y="54" fill="#0d7377" font-size="9" font-family="'Geist Mono',monospace" font-weight="600"># 프로젝트 규칙</text>
+      <text x="524" y="68" fill="#57534e" font-size="8.5" font-family="'Geist Mono',monospace">- Python 3.11 사용</text>
+      <text x="524" y="81" fill="#57534e" font-size="8.5" font-family="'Geist Mono',monospace">- 테스트: pytest</text>
+      <text x="524" y="94" fill="#57534e" font-size="8.5" font-family="'Geist Mono',monospace">- 코드 스타일: PEP8</text>
+
+      <!-- Arrow down -->
+      <line x1="620" y1="108" x2="620" y2="124"
+            stroke="#0d7377" stroke-width="1" marker-end="url(#a3)"/>
+      <rect x="540" y="112" width="160" height="14" rx="2" fill="rgba(13,115,119,0.06)"/>
+      <text x="620" y="123" fill="#0d7377" font-size="8" font-family="'Geist Mono',monospace"
+            text-anchor="middle" letter-spacing="0.06em">세션 시작 시 자동으로 읽음</text>
+
+      <!-- Day 1 & 2 same result -->
+      <rect x="448" y="136" width="332" height="24" rx="3"
+            fill="white" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <text x="458" y="152" fill="#57534e" font-size="9" font-family="'Geist',sans-serif">1일차: "테스트 짜줘"  →  ✓ pytest로 바로 작성</text>
+
+      <rect x="448" y="164" width="332" height="24" rx="3"
+            fill="rgba(13,115,119,0.07)" stroke="rgba(13,115,119,0.28)" stroke-width="0.8"/>
+      <text x="458" y="180" fill="#57534e" font-size="9" font-family="'Geist',sans-serif">2일차: "테스트 짜줘"  →  ✓ pytest로 바로 작성</text>
+
+      <!-- Legend -->
+      <line x1="24" y1="212" x2="796" y2="212" stroke="rgba(28,25,23,0.10)" stroke-width="0.8"/>
+      <circle cx="36" cy="225" r="4" fill="rgba(13,115,119,0.7)"/>
+      <text x="46" y="229" fill="#78716c" font-size="8" font-family="'Geist Mono',monospace">
+        CLAUDE.md — 세션이 바뀌어도 Claude가 기억하는 프로젝트 규칙 파일 (폴더 루트에 위치)
+      </text>
+    </svg>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="cards" style="margin-top:32px;">
+    <div class="card">
+      <p class="card-eyebrow">개념 01</p>
+      <div class="card-header">
+        <span class="card-dot accent"></span>
+        <h3>폴더 = Claude의 세계</h3>
+      </div>
+      <ul>
+        <li>VS Code에서 폴더 열기 (File → Open Folder)</li>
+        <li>그 폴더 안 파일만 Claude가 봄</li>
+        <li>다른 프로젝트는 보이지 않음</li>
+      </ul>
+      <p class="tip">💡 터미널에서는 <code>cd 폴더명</code> 후 <code>claude</code> 실행도 같은 원리입니다</p>
+    </div>
+
+    <div class="card">
+      <p class="card-eyebrow">개념 02</p>
+      <div class="card-header">
+        <span class="card-dot ink"></span>
+        <h3>세션은 서로 독립적</h3>
+      </div>
+      <ul>
+        <li>프로젝트마다 별도 Claude 세션</li>
+        <li>두 세션의 대화는 섞이지 않음</li>
+        <li>동시에 여러 프로젝트 진행 가능</li>
+      </ul>
+      <p class="tip">💡 A 프로젝트에서 한 말이 B에선 전혀 영향 없음</p>
+    </div>
+
+    <div class="card">
+      <p class="card-eyebrow">개념 03</p>
+      <div class="card-header">
+        <span class="card-dot teal"></span>
+        <h3>CLAUDE.md = 영구 기억</h3>
+      </div>
+      <ul>
+        <li>세션 종료 시 대화 내용은 사라짐</li>
+        <li>CLAUDE.md에 규칙을 적어두면</li>
+        <li>매 세션마다 자동으로 읽어옴</li>
+      </ul>
+      <p class="tip">💡 "이 프로젝트 규칙서"라고 생각하면 됩니다</p>
+    </div>
+  </div>
+
+  <footer>
+    CLAUDE CODE · 초보자 핵심 개념 가이드 &nbsp;·&nbsp; Plug:ON — AI를 실무에 연결하다
+  </footer>
+
+</div>
+</body>
+</html>
